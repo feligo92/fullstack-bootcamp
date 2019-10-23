@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link rel="stylesheet" href="index.css">
+    <title>Login</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-sm-6 offset-sm-3 form-login cuerpo">
+                <h1>Login</h1>
+                <form>
+
+                    <div class="form-group ">
+                        <label for="formGroupExampleInput">Teléfono</label>
+                        <input type="text" class="form-control username" id="formGroupExampleInput"
+                            placeholder="*********" pattern="[0-9]{9}">
+
+                    </div>
+
+                    <div class="form-group ">
+                        <label for="formGroupExampleInput">Codigo País</label>
+                        <input type="text" class="form-control username" id="formGroupExampleInput"
+                            placeholder="**" pattern="[A-Za-z]{2}">
+
+                    </div>
+                    <div class="form-group ">
+                        <label for="formGroupExampleInput2">Email</label>
+                        <input type="text" class="form-control password" id="formGroupExampleInput2"
+                            placeholder="******" pattern="(\w|_){1,}@(\w|_){1,}\.[a-z]{2,3}">
+                    </div>
+                    <div class="form-group ">
+                        <label for="formGroupExampleInput2">Password</label>
+                        <input type="text" class="form-control password" id="formGroupExampleInput2"
+                            placeholder="******" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{8,}">
+                    </div>
+
+                    <input type="submit" value="Signup" class="btn btn-primary myButton">
+
+                </form>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+
+
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>

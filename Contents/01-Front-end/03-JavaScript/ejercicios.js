@@ -893,4 +893,9 @@ function contadorCaracter(string, caracter) {
     return recuento;
 }
 console.log(`El número de veces que se repite ${letra} en ${string1} es ${contadorCaracter(string1, letra)}`);
-Contraer
+
+
+
+
+
+

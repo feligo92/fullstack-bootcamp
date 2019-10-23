@@ -61,7 +61,7 @@ for (let i = 0; i <= 10; i++) {//variable de la iteracion;condicion ; comportami
         console.log("hola", j);
     }
 }
-//Una funcionalidad nueva de ES6 es el bucle for of cuya estructura es for (let x of y) siendo y un iterable (array, strings)
+//Una funcionalidad nueva de ES6 es el bucle for of cuya estructura es for (let x of y) siendo "y" un iterable (array, strings)
 let animales = ['🐖', '🐂', '🦙', '🐏', '🦑']
 //of
 for (let animal of animales) {
@@ -76,7 +76,8 @@ let ciudad = {
     "alcalde": "Peñalosa",
     "seguridad": "nula"
 }
-//in
+// for in se utiliza para objetos
+
 for (let clave in ciudad) {
     console.log(clave)
 }
@@ -276,15 +277,430 @@ miBoton.addEventListener(`click`, showRespect)
 
 
 
-function showRespect(event){
+function showRespect(event) {
     event.preventDefault()
     document.write(`
         <img src="http://www.ciaocrossclub.it/root/discoremoto/Nik85/Ali%20G.jpg">
     `)
     return true;
 }
-​
-​
+
+
 let miBoton = document.querySelectorAll("body > button")[0]
-​
-miBoton.addEventListener("contextmenu", () => {showRespect()})
+
+miBoton.addEventListener("contextmenu", () => { showRespect() })
+
+Math.round
+Math.floor
+Math.min
+Math.max
+Math.random
+
+Math.round(Math.random() * 2)
+
+
+
+/*MANIPULACIÓN DE DOM
+
+DOM= document object model
+es la representacion interna que hace el explorador de la página.
+Con JS no manipulamos el html sino la representacion que tiene el explorador de la página.*/
+
+//cuando queramos modificar el dom siempre empezaremos por "document."
+document.getElementById = //te devulve un elemento por su id
+    document.getElementsByClassName = //te devuelve un array con todos lo elementos de esa clase
+    document.getElementsByTagName = //te devulve un array con todos los elementos con esa etiqueta
+    document.querySelector("(cualquier propiedad)")//devuelve el primer elemento
+document.querySelectorAll()//devuelve un array con todos los elementos por tanto SIEMPRE HAY QUE ESPECIFICAR EL INDICE
+
+
+/*propiedades de los documentos del dom*/
+
+
+let miButton = document.querySelectorAll("button")[0]
+
+//ahora miButton es un objeto con propiedades propias del DOM, y se puede acceder a ellas como a las de cualquier objeto
+
+miButton.style.backgroundColor = "red" //podemos acceder a sus propiedades de estilos y manipularlas
+
+miButton.classList // devuleve un array con todas las clases
+
+miButton.className// devulve una string con todas las clases con miButton.className="lo que quieras" podemos modificarla
+
+miButton.innerText//devulve el texto que contiene   miButton.innerText="lo que quieras" podemos modificar el texto
+
+miButton.innerHTML
+
+
+
+/* Informacion persistida en el cliente
+
+1-No sensible
+
+2-Ocupar poco espacio
+
+
+Cookies: trozo de informacion que se almacena temporalmente, se expresan en forma de "clave=valor"*/
+
+
+document.cookie //nos devuleve un string con todas las cookies
+
+LocalStorage//devuelve un objeto con toda la informacion alojada en el
+
+
+
+/*LLAMADAS HTTP
+
+Es una forma de comunicacion con un Backend
+
+En una red de servidores los clientes inician la conversacion y hacen peticiones (recursos) a los servidores, 
+los servidores responden con esos recursos y una vez terminada la conversacion se "olvidan" uno del otro.(estos son los principios de la arquitectura REST)
+Por cada recurso hay una peticion y una respuesta.
+
+Como hacer la peticion HTTP y que hacer con la respuesta.
+
+Hay servidores que devuelven archivos (ejemplo html)
+
+        ||
+       _||_
+       \  /
+        \/
+        
+Una web API es un servidor que solo devuelven datos 
+
+La web API nos devulve los datos en diferentes notaciones.
+
+JSON
+XML
+YAML
+
+
+Peticiones HTTP,Hay cerca de una docena de peticiones pero las mas usadas son:
+Operaciones CRUD=Create, read, update, delete
+1-GET con esta peticion solicitamos datos a la web api.
+2-POST con esta peticion solicitamos que guarde un dato. POST--> info(body)
+3-DELETE con esta peticion solicitamos que borre un dato guardado.
+4-PUT con esta peticion solicitamos que modifique un dato. PUT -->(body)*/
+
+
+//1-GET
+//MODELO PETICION GET CON CALLBACK
+function httpGet(theUrl, callback) {
+
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl);
+
+    xmlHttp.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+
+    xmlHttp.send();
+}
+
+function imprime(texto) { //callback
+    console.log(texto)
+
+
+
+
+    //2-POST 
+
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
+    }
+    xmlHttp.open("POST", "URL");
+
+    xmlHttp.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+
+    xmlHttp.send(JSON.stringify({ "hola": "mundo" }));
+
+    //Obtener la respuesta del post parseada a JSON
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+
+            console.log(JSON.parse(xmlHttp.responseText))
+    }
+    xmlHttp.open("POST", "https://reqres.in/api/register");
+
+    xmlHttp.setRequestHeader("Content-Type", "application/json")
+
+    xmlHttp.send(JSON.stringify({
+        "username": "eve.holt@reqres.in", "password": "pistol"
+    }));
+
+
+
+
+    //-3 DELETE
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
+    }
+    xmlHttp.open("DELETE", "https://feligo.free.beeceptor.com");
+
+    xmlHttp.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+
+    xmlHttp.send();
+
+
+    //4-PUT
+
+    let xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function () {
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            console.log(xmlHttp.responseText);
+    }
+    xmlHttp.open("PUT", "URL");
+
+    xmlHttp.setRequestHeader("X-Requested-With", "XMLHttpRequest")
+
+    xmlHttp.send(JSON.stringify({ "hola": "mundo" }));
+
+
+
+
+    /*Funciones prototípicas: 
+    
+    Cuando creamos un array o un string creamos un objeto a partir del prototipo del tipo de dato que estamos creando.
+    Este prototipo contiene multitudde propiedades y de funciones propias (.length por ejemplo)
+    
+    Funciones prototipicas de los arrays : a las funciones propias del prototipo se les llama métodos.*/
+    // https://www.w3schools.com/jsref/jsref_map.asp
+
+    //CONCAT 
+    array.concat()-- > //sirve para concatenar 2 strings, nombre del primer array.concat(2º array) esto genera un 3r array suma de los 2
+        let arr3 = arr1.concat(arr2)
+
+    let arr4 = arr1.concat(arr2, arr3)//se pueden concatenar tantos arrays como se quiera separándolos con comas
+
+    //FILL (muta)
+    array.fill(x)-- >//cambia todos los valores de un array al valor especificado
+
+        //UNSHIFT PUSH (mutan)
+
+        array.unshift(x)-- >//añade elementos al principio de un array
+        array.push(x)-- >//añade elementos al final de un array
+
+        //POP (muta)
+
+        array.pop()-- >//Elimina el último elemento de un array
+
+        //INDEXOF
+
+        array.indexOf("x")-- >// Introducimos como argumento un valor del array y nos devuelve su índice. Si un elemento no existe en un array
+        //su indice sera -1
+
+        //SLICE (muta)
+
+        array.slice(x, y)-- >// Introducimos como argumento 2 posiciones del array
+        //obtendremos un array nuevo que habra recortado el primero desde la primera posicion(incluida) hasta la segunda (no incluida)
+
+        //SPLICE (muta)
+
+        array.splice(x, y, "a", "b")-- > //los strings son los elementos que quieres introducir
+        // x= punto de inicio
+        //  y= cuantos elementos quieres reemplazar
+        //podemos introducir elementos sin borrar ninguno de los existentes o eliminar elementos sin introducir nuevos
+        array.splice(array.indexOf("a"), 1) // podemos eliminar un elemento en concreto sin conocer su indice
+
+    //forEACH
+
+    array.forEach(function)-- >//Introducimos una funcion como argumento que se aplicara a cada uno de los elementos del array
+
+        let fruits = ["apple", "orange", "cherry"];
+    fruits.forEach((elemento) => { console.log(elemento) }) //podemos imprimir cada elemento
+
+    let fruits = ["apple", "orange", "cherry"];
+    fruits.forEach((elemento) => { console.log(elemento[0]) })//o como un string se comporta podemo obtener la primera letra de cada uno por ejemplo
+
+    let fruits = ["apple", "orange", "cherry"];
+    fruits.forEach((elemento, i) => { console.log(elemento) })//imprimiremos cada elemento y su posicion
+
+    var fruits = ["apple", "orange", "cherry"];// la funcion que pasamos como argumento puede ser declarada
+    fruits.forEach(myFunction);
+
+    function myFunction(item, index) {
+        document.getElementById("demo").innerHTML += index + ":" + item + "<br>";
+    }
+
+    //MAP
+
+    var numbers = [4, 9, 16, 25];
+    numbers.map((element) => { return element / 2 })//obtenemos un NUEVO array divido por 2 
+
+    let arrayDividido = numbers.map((element) => { return element / 2 })//
+
+
+    //FILTER (muta)
+
+    var numbers = [4, 9, 16, 25];       //con filter filtramos los elementos en funcion de una condicion booleana
+    numbers.filter((element) => {        // solo nos devuelve aquellos que han superado la prueba
+        if (element % 2 == 0) {
+            return true
+        } else {
+            return false
+        }
+    })
+
+    //SORT (muta)
+
+    let fruits = ["apple", "orange", "cherry"];
+
+    fruits.sort()       //si no pasamos argumento nos ordena el array alfabeticamente  si son strings 
+
+
+    var numbers = [4, 9, 16, 25, 1, 300, 23, -60];
+
+    numbers.sort((element1, element2) => { return element1 - element2 });//ordenar numeros creciente
+    numbers.sort(function (a, b) { return a - b });//ordenar numeros creciente
+
+    numbers.sort((element1, element2) => { return element1 - element2 });//ordenar numeros decreciente
+    numbers.sort(function (a, b) { return a - b });//ordenar numeros decreciente
+
+    //JOIN 
+
+    array.join("") //genera un string con los elementos del array reparandolos por el argumento entre comillas
+    //si no introduces argumento se separa con comas por defecto
+
+    var numbers = [4, 9, 16, 25, 1, 300, 23, -60];
+    numbers.join(`.`)
+
+    //Funciones prototipicas de los strings: https://www.w3schools.com/jsref/jsref_obj_string.asp
+
+    //CONCAT
+    //concatena strings
+    //no modifica los strings originales asi que hay que guardarlo en una variable
+    var str1 = "Hello ";
+    var str2 = "world!";
+    var res = str1.concat(str2);
+
+
+    //INDEXOF
+    //sirve para encontrar una match literal
+    var str = "Hello world, welcome to the universe.";
+    var n = str.indexOf("welcome"); //devuelve la posicion de la primera letra (la posicion empieza por 0)
+    str.indexOf("welcome") > -1 //indica si la posicion es 0 o superior y por tanto aparece en el string
+        ||
+        str.includes("welcome") //comprueba si aparece en el string, devuelve booleano
+
+    /*En ocasiones no nos interesa encontrar una ocurrencia en concreto sino que buscaremos PATRONES
+    REGEX = regular expressions*/
+
+
+
+    //REPLACE
+
+    var str = "Hello world, welcome to the universe.";
+    var n = str.replace("world", "dude") //antes de la coma va el valor a reemplazar, despues de la coma va el valor que reemplaza
+    var n = str.replace(/ /, "dude")// se puede indicar como string buscando un match literal o una REGEX
+
+    //MATCH
+
+    var str = "Hello world, welcome to the universe.";
+    var n = str.match(/welcome/i); //la i es un modificador llamado (insensitive) para que no tenga en cuenta mayus o minus
+
+    var str = "Hello world, welcome to the universe.Hello world, welcome to the universe.Hello world, welcome to the universe.";
+    var n = str.match(/welcome/ig); // la g es un modificador llamado (global) que hara que nos devuelva todas las coincidencias
+
+    // var str = "Hello world, welcome to the universe.Hello world, welcome to the universe.Hello world, welcome to the universe.";
+    // var n = str.match(/welcome/igm) // la m es un modificador llamado (multiline) para que no tenga en cuenta el salto de linea
+
+
+    var str = "Hello world, welcome to the universe.";
+    var n = str.match(/[a-h]/gim)     //hacemos un intervalo y nos retorna todas las coincidencias tanto para letras como para números.
+
+
+    var numbers = "De sol, espiga y 23 deseo Son sus manos 1en mi pelo De nieve huracán y abismos76 El sitio de mi recreo";
+    var n = numbers.match(/[0-9]/gim)
+
+    var str = "Hello world, welcome to the universe.";
+    var n = str.match(/[a-h][a-h]/gim)          //asi buscamos 2 letras de la a hasta la h que esten juntas
+
+        / [a - z][a - z][a - z][a - z][a - z] / //comprueba que haya 5 letras juntas
+        /[0-9][0-9][0-9][0-9][0-9]/  //comprueba que haya 5 letras juntas
+        / [0 - 9][0 - 9][0 - 9][0 - 9][0 - 9][0 - 9][0 - 9][0 - 9] - ([a - z] | [A - Z]) / // ([a-z]|[A-Z]) asi buscamos una letra de la a-z en mayuscula o en minuscula
+        /[^0-9]/ //todo lo que no sea un numero del 0 al 9
+        /^ [0 - 9] / //buscamos un numero del 0 al 9 que sea el inicio del string
+
+        //Metacarácteres
+
+        //simbolos que representan algo especial en terminologia de REGEX
+
+        /./ //el punto significa qualquier cosa caracteres especiales incluidos
+        /.[0 - 9] / // aqui obtendriamo POR PARES todos los caracteres que tengan un numero a su derecha 
+        / \./ // con \. buscamos literalmente un punto, lo haremos con cualquier metacaracter
+
+        ^ // significa que buscamos el inicio del string
+        [^ X] // significa lo contrario de X
+        $ // significa que buscamos el final del string
+        / ^ hola$ / //buscamos inicio y final del string
+
+        / \w / //encuentra solo letras y numeros
+        / \W / // encuentra cualquier caracter que no sea alfanumérico
+         / \d / // encuentra un dígito
+         / \D / // todo lo que no sea número
+         / \s / // busca espacios en blanco
+         / \S / // busca todo lo que no sean espacios en blanco
+         / \t / // busca tabulaciones
+         / [^\t] / // busca todo lo que no sean tabulaciones  
+
+
+                    //Cuantificadores
+
+                    //Los utilizamos para indicar cuantos resultados buscamos
+
+                    /[0-9]{8}/ //indicamos que buscamos 8 coincidencias de numeros del 0 al 9
+
+                    / [0 - 9]{ 8 } / = /\d{ 8 } /
+
+                        /\d{ 5, 8 } /   / / así indicamos un intervalo expresando el menor y el mayor ambos incluidos
+
+                            /\d * / / / cualquier número de veces que se repita la ocurrencia
+
+                                //look ahead
+                                / (?=\d). //devuelve cualquier cosa que cumpla la condicion despues del igual
+    /(?=.*?[a-z]) (?=.*?[A-Z]) (?=.*?\d) (?=.*?\W).* / // buscamos que tenga una minuscula, mayuscula, numero y caracter especial
+
+        / (?=.*? [a - z])(?=.*? [A - Z])(?=.*?\d)(?=.*?\W).{ 8,} / / /
+
+
+//SPLIT
+
+var str = "Hello world, welcome to the universe.";//obtenemos un array de strings cortando por el argumento de la funcion .split("")
+    var n = str.split(" ")
+
+
+
+    ______________________________________________________________________________________________________________________________
+
+
+    //FECHAS:
+
+    let fecha = {
+        "año": 10,
+        "mes": 10,
+        "dia": 23,
+        "incrementarDia": function () {
+            this["dia"]++;
+        }
+    }
+
+
+    //NEW DATE
+
+    let now = new Date() //nos retorna un objeto con la fecha exacta del momento en que se creó
+
+    la funcion Date()// sirve para crear fechas en JS, si no le pasas argumento genera un fecha con el instante en que se invocó la función.
+
+    /*podemos modificar la fecha pasandole argumentos*/
+            //año   mes   dia hora minuto segundo milisegundos
+    new Date("2019","10","08","10","15",  "33",     "340")
+
+    new Date("2018-10-09 12:00:12:239")
