@@ -510,7 +510,7 @@ function imprime(texto) { //callback
         //podemos introducir elementos sin borrar ninguno de los existentes o eliminar elementos sin introducir nuevos
         array.splice(array.indexOf("a"), 1) // podemos eliminar un elemento en concreto sin conocer su indice
 
-    //forEACH
+    //forEACH ES6
 
     array.forEach(function)-- >//Introducimos una funcion como argumento que se aplicara a cada uno de los elementos del array
 
@@ -704,3 +704,219 @@ var str = "Hello world, welcome to the universe.";//obtenemos un array de string
     new Date("2019","10","08","10","15",  "33",     "340")
 
     new Date("2018-10-09 12:00:12:239")
+
+
+
+
+    ______________________________________________________________________________________________________________________________
+
+    //ASINCRONÍA
+
+    //Promesas: 
+
+  //Llamada para promesas:
+    function httpGet(theUrl)
+    {
+        let miPromesa = new Promise((resolve, reject) => {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function() { 
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+                resolve(xmlHttp.responseText);
+            }
+        xmlHttp.open("GET", theUrl, true); 
+        xmlHttp.send(null);
+    })
+
+     return miPromesa;
+    }
+
+
+    //Callbacks
+httpGet('https://anapioficeandfire.com/api/books/1', 
+(dataBook) => {
+	let book = JSON.parse(dataBook);
+	console.log(book["name"])
+	httpGet(book["characters"][0], 
+		(characterData) => {
+			let character = JSON.parse(characterData);
+			console.log(character["name"])
+		}
+	)	
+})
+​
+//Promises
+
+function httpGet(theUrl) {
+    let miPromesa = new Promise((resolve, reject) => {
+        var xmlHttp = new XMLHttpRequest();
+        xmlHttp.onreadystatechange = function () {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                resolve(xmlHttp.responseText);
+            } else if (xmlHttp.readyState == 4) {
+                reject(xmlHttp.responseText);
+            }
+        }
+        xmlHttp.open("GET", theUrl, true);
+        xmlHttp.send(null);
+   
+    })
+    return miPromesa;
+}
+
+
+
+
+httpGet("https://anapioficeandfire.com/api/books/1")
+.then(JSON.parse)
+.then((book) => {return httpGet(book["characters"][0])})
+.then(JSON.parse)
+.then((character) => {console.log(character['name'])})
+
+
+
+//VERSIONES DE ES6
+
+//Features propias de ES6
+
+/*Parámetros predefinidos para los argumentos de las funciones.*/ function hola (a=1)
+//Template literals
+// let / const
+// forEach
+//for...of/ for ...in
+// promises
+/* spread operator*/ function hola (...arg){}
+//funciones flecha la function arrow conserva el this
+let hola= {
+    "tamaño":24,
+    "color": "blanco",
+    "remodelar": function(){
+        setTimeout(() =>{
+            this.color="rojo";
+        }, 3000) 
+    }
+}
+
+//asignación por destructuring
+
+let alumno1 = "lina"
+let alumno2 = "noel"
+
+let alumnos = {"alumno1" : alumno1, "alumno2" ; alumno2} //escturcturing
+
+let alumnos = { "alumno1" : "lina" , "alumno2" : "noel"  }//destructuring
+let{alumno1,alumno2}= alumnos
+
+
+let array1= ["rojo", "azul","rojo"]
+
+let [rotu1,rotu2,rotu3] = array1
+
+/*Módulos
+
+Se utilizan para fragmentar el código e importarlo por partes para mantenerlo ordenado.*/
+
+en el archivo de origen indicamos que exportamos export{funcion}
+en el archivo de destino indicamos que importamos y de donde viene import{funcion} from 'ruta relativa'
+en el html la etiqueta <script type="module" src=""></script>
+para que esto funcione hay que abrirlo en un servidor.
+
+/*clases
+Es un plantilla para crear objetos*/
+
+class Casa {
+    "ciudad"="Barcelona";
+    "paredes"= 4
+}
+
+let chalet = new Casa //chalet sera una instancia de la clase Casa
+
+
+class Casa {
+    constructor(ciudadDeclarada){  
+        this.ciudad = ciudadDeclarada
+    }
+    paredes = 4
+}                                       //CONSTRUCTOR es la funcion que permite setear las claves a partir de los argumentos de new Casa()
+
+let chalet = new Casa("Madrid");
+let piso = new Casa("Valencia");
+
+
+class Casa {
+
+    #arquitecto="";
+
+    constructor(ciudadDeclarada,arquitectoDeclarado){  
+        this.ciudad = ciudadDeclarada               //asi declaramos la propiedad arquitecto como privara y no se puede manipular
+        this.#arquitecto = arquitectoDeclarado
+    }
+    paredes = 4
+}
+
+class Casa {
+
+    #arquitecto="";
+
+    constructor(ciudadDeclarada,arquitectoDeclarado){  
+        this.ciudad = ciudadDeclarada              
+        this.#arquitecto = arquitectoDeclarado
+    }
+    setArquitectoDeclarado(arquitectoDeclarado){ // con esta funcion podemos cambiar el valor a la clase privada
+        this.#arquitecto = arquitectoDeclarado;
+    }
+    getArquitectoDeclarado(){  // con esta funcion conseguimos que nos retorne el valor de la clave privada
+       return this.#arquitecto;
+    }
+
+    paredes = 4
+}
+
+
+class Piso extends Casa{            //esta clase tendra todo lo que tiene la clase Casa mas sus propiedades
+    planta = 0;
+    constructor(ciudadDeclarada,arquitectoDeclarado,plantaDeclarada){//contructor recibe como argumentos los de Casa+Piso
+        super(ciudadDeclarada,arquitectoDeclarado)  //super recibe como argumentos los argumentos que recibia Casa
+        this.planta = plantaDeclarada;
+    }
+}
+
+
+/*Programar para exploradores obsoletos
+
+POLYFILLS
+
+para poder utilizar features de versiones no soportadas por el explorador podemos utilizar unas librerias llamadas polyfill
+
+corejs es el polyfill  que cubre mas funcionalidades
+
+TRANSPILAR
+
+Compilación del código entre lenguajes de un mismo nivel.
+
+El transpilador mas conocido es BABEL*/
+
+
+
+ //PARADIGMAS DE PROGRAMACIÓN
+// Hay lenguajes que solo aceptan un paradigma y otros permiten que el programador escoja
+/*Son estilos de programación, un conjunto de reglas que hacen "mejor" el código.
+
+                                            paradigmas de programación
+                                                      |
+                                                      |
+                                                      |                
+                ______________________________________|_________________________________________________________
+                |                                                                                               |
+            imperativa                                                                                      Declarativa
+        (definimos paso a paso)                                                     (creamos una estructura de código que resuleve muchos problemas)
+ (paso a paso como hacer un pollo asado)                                                                 (quiero un pollo asado)
+                |                                                                                               |
+    ____________|_____________                                                            ______________________|__________________
+    |                         |                                                           |                                        |
+Procedural          Programacion orientada a objetos                                   Logical                                  Funcional
+(funciones que         (clases encapsuladas)                                     Programacion basada                 programacion basada en funciones deterministas
+ se invocan       Principios basicos encapsulacion y herencia                  en estructuras logicas                  Las funciones tienen que ser puras ( sin side effects)
+  entre si)                                                                                                                       No global variables
+                                                                                                                              Inmutabilidad de las variables
+                                                                                                                             (referencial transparency)
+
