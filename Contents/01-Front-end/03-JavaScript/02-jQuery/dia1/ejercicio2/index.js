@@ -19,7 +19,6 @@ function setIdioma() {
 
         $("body > main > div.jumbotron > div > h1").text(objES.titulo);
         $("body > main > div.jumbotron > div > p > a").text(objES.botonTitulo);
-        $("body > main > div.container > div").empty()
         $("body > main > div.container > div").html(`<div class="col-md-4">
             <h2>${objES.bodyTitle}</h2>
             <p>${objES.cancion}</p>
