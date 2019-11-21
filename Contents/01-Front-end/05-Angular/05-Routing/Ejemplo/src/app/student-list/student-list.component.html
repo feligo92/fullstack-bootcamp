@@ -1,5 +1,10 @@
-<ul>
-    <li class="mt-1" *ngFor="let student of _data.arrStudents"
-    >{{student.name}}, {{student.bootcamp}}, {{student.age}}
-    </li>
-</ul>
+<div class="container"class="mt-5 ml-1">
+    <!-- Example row of columns -->
+    <div class="row">
+        <div class="col-md-4" *ngFor="let student of _data.arrStudents">
+            <h2>{{student.name}}</h2>
+            <p>{{student.bootcamp}}, {{student.age}}</p>
+            <button class="btn-primary"routerLink="/student/{{student.id}}" >View more</button>
+        </div>
+    </div>
+</div>

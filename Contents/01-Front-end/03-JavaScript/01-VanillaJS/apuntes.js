@@ -916,7 +916,7 @@ El transpilador mas conocido es BABEL*/
 Procedural          Programacion orientada a objetos                                   Logical                                  Funcional
 (funciones que         (clases encapsuladas)                                     Programacion basada                 programacion basada en funciones deterministas
  se invocan       Principios basicos encapsulacion y herencia                  en estructuras logicas                  Las funciones tienen que ser puras ( sin side effects)
-  entre si)                                                                                                                       No global variables
+  entre si)         Inyeccion de dependencias                                                                                     No global variables
                                                                                                                               Inmutabilidad de las variables
                                                                                                                              (referencial transparency)
 

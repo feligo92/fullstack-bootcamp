@@ -1,0 +1,145 @@
+<div class="container">
+    <br>
+    <br>
+    <form #myForm="ngForm" (ngSubmit)="sendData(myForm)">
+        <!--Input de Email-->
+        <div class="form-group">
+            <label for="exampleInputEmail1">Email address</label>
+            <input [(ngModel)]="formData['email']" name="userEmail" type="email" class="form-control"
+                id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" #miEmail="ngModel"
+                required pattern="\S+@\S+\.\S+">
+
+            <small *ngIf="miEmail.invalid && miEmail.dirty" id="emailHelp" class="form-text error">Email wrong
+                format.</small>
+            <small *ngIf="miEmail.invalid && miEmail.touched && miEmail.pristine" id="emailHelp"
+                class="form-text error">Email is mandatory</small>
+        </div>
+        <!--Input de Password-->
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input [(ngModel)]="formData['password']" name="userPassword" type="password" class="form-control"
+                id="exampleInputPassword1" aria-describedby="PasswordHelp" placeholder="Enter Password"
+                #miPassword="ngModel" required pattern="(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}">
+
+            <small *ngIf="miPassword.invalid && miPassword.dirty" id="passwordHelp" class="form-text error">Password
+                must contain
+                <ul>
+                    <li>at least 8 characters </li>
+                    <li>at least 1 lowcase character </li>
+                    <li>at least 1 uppercase character </li>
+                    <li>at least 1 number </li>
+                    <li>at least 1 special character(!$#) </li>
+                </ul>
+            </small>
+            <small *ngIf="miPassword.invalid && miPassword.touched && miPassword.pristine" id="PasswordHelp"
+                class="form-text error">Password is mandatory</small>
+        </div>
+
+        <!--Input birthday-->
+
+        <div class="form-group">
+            <label for="exampleInputbirthDate1">Birth date</label>
+            <input [(ngModel)]="formData['birthDate']" name="userbirthDate" type="date" class="form-control"
+                id="exampleInputbirthDate1" aria-describedby="birthDateHelp" placeholder="Enter birthDate"
+                max="2019-11-13" min="1900-01-01" #mibirthDate="ngModel">
+
+            <small *ngIf="mibirthDate.invalid && mibirthDate.dirty" id="birthDateHelp" class="form-text error">birthDate
+                wrong
+                format.</small>
+        </div>
+
+
+        <!--Input salary-->
+
+        <div class="form-group">
+            <label for="exampleInputsalary1">Salary {{formData['salary']}}€</label>
+            <input [(ngModel)]="formData['salary']" name="usersalary" type="range" class="form-control"
+                id="exampleInputsalary1" aria-describedby="salaryHelp" max="100000" min="12000"
+                placeholder="Enter salary" #misalary="ngModel">
+
+            <small *ngIf="misalary.invalid && misalary.dirty" id="salaryHelp" class="form-text error">salary wrong
+                format.</small>
+            <small *ngIf="misalary.invalid && misalary.touched && misalary.pristine" id="salaryHelp"
+                class="form-text error">salary is mandatory</small>
+        </div>
+
+        <!--Input area laboral-->
+
+
+
+        <div class="form-group">
+            <label for="disabledSelect">Area de trabajo</label>
+            <select [(ngModel)]="formData['areaTrabajo']" #MiAreaDeTrabajo="ngModel" name="areaDeTrabajo"
+                id="disabledSelect" class="form-control">
+                <option value="tecno">Tecnología</option>
+                <option value="admin">Administración</option>
+                <option value="rest">Restauración</option>
+
+            </select>
+        </div>
+
+        <!--Input género-->
+        <label class="form-check-label" for="gridRadios1">Gender</label>
+        <br>
+        <div class="form-check">
+
+            <input [(ngModel)]="formData['gender']" class="form-check-input" type="radio" name="gridRadios"
+                id="gridRadios1" value="option1" required checked>
+            <label class="form-check-label" for="gridRadios1">
+                Man
+            </label>
+        </div>
+        <div class="form-check">
+            <input [(ngModel)]="formData['gender']" class="form-check-input" type="radio" name="gridRadios"
+                id="gridRadios2" value="option2">
+            <label class="form-check-label" for="gridRadios2">
+                Woman
+            </label>
+        </div>
+
+        <br>
+        <!--Gustos-->
+        <label class="form-check-label" for="defaultCheck1">Gustos musicales</label>
+        <div class="form-check">
+            <input name="rock" [(ngModel)]="formData['gustosMusicales']['rock']" class="form-check-input"
+                type="checkbox" value="" id="defaultCheck1">
+            <label class="form-check-label" for="defaultCheck1">
+                Rock
+            </label>
+        </div>
+        <div class="form-check">
+            <input name="doom" [(ngModel)]="formData['gustosMusicales']['doom']" class="form-check-input"
+                type="checkbox" value="" id="defaultCheck2">
+            <label class="form-check-label" for="defaultCheck2">
+                Doom
+            </label>
+        </div>
+
+        <!--Input description-->
+
+        <div class="form-group">
+            <label for="exampleInputdescription1">Personal description</label>
+            <textarea [(ngModel)]="formData['description']" maxlength="300" name="userdescription"  class="form-control"
+                id="exampleInputdescription1" aria-describedby="descriptionHelp" placeholder="Enter description with 300 characters"
+                #midescription="ngModel">
+            </textarea>
+
+            <small *ngIf="midescription.invalid && midescription.dirty" id="descriptionHelp"
+                class="form-text error">description wrong
+                format.</small>
+            <small *ngIf="midescription.invalid && midescription.touched && midescription.pristine" id="descriptionHelp"
+                class="form-text error">description is mandatory</small>
+        </div>
+
+        <br>
+        <button type="reset" class="btn btn-secondary mr-3">Reset</button>
+        <button [disabled]="myForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+
+
+        <br>
+
+        <div *ngIf="myForm.invalid && myForm.touched" class="alert alert-danger mt-2" role="alert">
+            Invalid form
+        </div>
+    </form>
+</div>

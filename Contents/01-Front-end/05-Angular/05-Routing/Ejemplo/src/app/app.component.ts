@@ -9,9 +9,5 @@ import { DataService } from './services/data.service';
 export class AppComponent {
   constructor(public _data:DataService) { }
 
-  vista = 'home';
-
-  showView(valor: string): void {
-    this.vista = valor;
-  }
+  
 }
